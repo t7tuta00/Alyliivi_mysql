@@ -30,10 +30,14 @@ app.put('/hello', (req, res) => res.send('Hello PUT World!'));
 app.delete('/hello', (req, res) => res.send('Hello DELETE World!'));
 
 app.post('/patient', (req, res) => {
-  res.send("terve");
+  res.send(req.body);
   console.log (req.body);
-  console.log (req.body.state);
+});
 
+//tulostaa tietokannasta selaimeen
+app.get('/patient', (req, res) => {
+
+    res.send();
 });
 
 /* Route parameters */

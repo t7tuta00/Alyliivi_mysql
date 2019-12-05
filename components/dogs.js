@@ -5,7 +5,7 @@ const router = express.Router();
 //  Return all dog information
 router.get('/', (req, res) => {
     db.query('SELECT * FROM patientinformation').then(results => {
-        res.json({ dogs: results})
+        res.json({ patient: results})
     })
     .catch(() => {
         res.sendStatus(500);
@@ -13,8 +13,8 @@ router.get('/', (req, res) => {
 });
 
 //  Return information of a single dog
-router.get('/:patientId', (req, res) => {
-    db.query('SELECT * FROM patientinformation where id = ?', [req.params.patientId])
+router.get('/id', (req, res) => {
+    db.query('SELECT * FROM patientinformation where id = ?', [req.params.id])
     .then(results => {
         res.json(results);
     })
@@ -31,9 +31,9 @@ router.get('/:patientId', (req, res) => {
         image: string - whole url to image
     }
 */
-router.post('/', (req, res) => {
+router.post('/post', (req, res) => {
 
-    db.query('INSERT INTO patientinformation (StateInfo, state, stateDescription, time, temp) VALUES (?,?,?,?,?)', [req.body.StateInfo, req.body.state, , req.body.stateDescription, , req.body.time, , req.body.temp)]
+    db.query('INSERT INTO patientinformation (id,StateInfo, state, stateDescription, time, temp) VALUES (?,?,?,?,?,?)', [req.body.id,req.body.StateInfo, req.body.state, , req.body.stateDescription, , req.body.time, , req.body.temp)]
     .then(results => {
         console.log(results);
         res.sendStatus(201);
@@ -44,8 +44,8 @@ router.post('/', (req, res) => {
 
 });
 
-router.delete('/:dogId', (req, res) => {
-    db.query('DELETE FROM patientinformation where id = ?', [req.params.patientId])
+router.delete('/:id', (req, res) => {
+    db.query('DELETE FROM patientinformation where id = ?', [req.params.id])
     .then(results => {
         res.sendStatus(200);
     })
