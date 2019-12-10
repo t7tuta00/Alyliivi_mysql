@@ -24,20 +24,31 @@ app.use(cors())
 
 
 /* basic HTTP method handling */
-app.get('/hello', (req, res) => res.send('Hello GET World!'));
+/*app.get('/hello', (req, res) => res.send('Hello GET World!'));
 app.post('/hello', (req, res) => res.send('Hello POST World!'));
 app.put('/hello', (req, res) => res.send('Hello PUT World!'));
-app.delete('/hello', (req, res) => res.send('Hello DELETE World!'));
+app.delete('/hello', (req, res) => res.send('Hello DELETE World!')); */
 
-app.post('/patient', (req, res) => {
-  res.send(req.body);
-  console.log (req.body);
+app.post('/rb', (req, res) => {
+  db.query('INSERT INTO patient(State, Temp) VALUES (?,?)', [req.body.State, req.body.Temp])
+  .then(results => {
+	console.log("toimii");
+	res.sendStatus(201);
+  })
+  .catch(() => {
+	res.sendStatus(500);
+  });
 });
 
 //tulostaa tietokannasta selaimeen
 app.get('/patient', (req, res) => {
-
-    res.send();
+   db.query('SELECT * FROM patient')
+   .then(results => {
+	res.json(results);
+   })
+   .catch(() => {
+	res.sendStatus(500);
+   })
 });
 
 /* Route parameters */
@@ -64,10 +75,7 @@ Promise.all(
     [
         db.query(`CREATE TABLE IF NOT EXISTS patient(
             id INT AUTO_INCREMENT PRIMARY KEY,
-            StateInfo VARCHAR(32),
-            State INT(2),
-            StateDescription VARCHAR(32),
-            time INT(100),
+            State VARCHAR(32),
             Temp INT(10)
         )`)
         // Add more table create statements if you need more tables

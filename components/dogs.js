@@ -33,7 +33,7 @@ router.get('/id', (req, res) => {
 */
 router.post('/post', (req, res) => {
 
-    db.query('INSERT INTO patientinformation (id,StateInfo, state, stateDescription, time, temp) VALUES (?,?,?,?,?,?)', [req.body.id,req.body.StateInfo, req.body.state, , req.body.stateDescription, , req.body.time, , req.body.temp)]
+    db.query('INSERT INTO patientinformation (id,StateInfo, state, stateDescription, time, temp) VALUES (?,?,?,?,?,?)', [req.body.id, req.body.StateInfo, req.body.state, req.body.stateDescription, req.body.time, req.body.temp])
     .then(results => {
         console.log(results);
         res.sendStatus(201);
